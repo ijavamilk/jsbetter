@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"/>-->
+</head>
+<body>
+<p>
+    <script>
+        document.write("The date is " + new Date().toDateString())
+    </script>
+
+    <script src="jsdefer.js" defer>
+
+    </script>
+    <script>
+        alert("script");
+    </script>
+    <script>
+//        var script = document.createElement("script");
+//        script.type = "text/javascript";
+//        script.src ="jsappend.js";
+//        script.onload = function () {
+//            alert("script loaded")
+//        }
+//        document.getElementsByTagName("head")[0].appendChild(script);
+    </script>
+    <script>
+        //动态加载标准实现方法
+        function loadScript(url, callback) {
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+
+            if(script.readyState){//ie
+                script.onreadystatechange = function () {
+                    if(script.readyState == "loaded" || script.readyState=="complete"){
+                        script.onreadystatechange = null;
+                        callback();
+                    }
+                };
+
+            }else {
+                //其它浏览器
+                script.onload = function () {
+                    callback();
+                };
+            }
+            script.src = url;
+            document.getElementsByTagName("head")[0].appendChild(script);
+        }
+    </script>
+    <script>
+        loadScript("jsappend.js", function () {
+            alert("complete");
+        });
+    </script>
+    <script>
+        window.onload = function () {
+            alert("load")
+        }
+    </script>
+</p>
+<div style="background-color: red; width:200px; height: 200px;"></div>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"/>
+</body>
+</html>
